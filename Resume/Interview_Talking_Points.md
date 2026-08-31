@@ -1,0 +1,23 @@
+# Interview Talking Points
+
+10 likely technical questions, with guidance on how to answer honestly. Where the answer depends on data not yet measured, don't memorize a fake number, describe the method and cite the real result once testing is complete.
+
+1. **"Why this frame design over a standard quadcopter frame?"** Walk through the three-concept comparison in `../Research/Concept_Comparison.md`. Concept C (modular arm) was chosen specifically for repairability during iterative testing, at a small, deliberate mass/stiffness cost versus a traditional X-frame. Be ready to explain why repairability mattered more than shaving a gram or two for a first build.
+
+2. **"How did you size your motors and propellers?"** Explain the thrust-to-weight calculation (`../Mechanical/Frame_Design.md` §2): a bottom-up mass estimate, a 2:1 T/W target, and the resulting required thrust. Be honest that the exact achieved thrust for this specific motor/prop combo wasn't available from a manufacturer source and had to be deferred to bench testing (Test 6). That's a better answer than pretending to have a thrust curve that doesn't exist.
+
+3. **"Why did the budget end up above your original $100 CAD target?"** This is a genuinely good story, not something to hide: real brushless FPV motor pricing (~$51 USD for a set of 4, confirmed across two independent real listings) is the actual market floor for hardware that meets the payload target, not a shopping mistake. Explain the brushed-motor fallback that was also costed out, and why it wasn't chosen (it can't carry the target payload).
+
+4. **"How did you size your payload-release servo?"** Walk through the torque/moment-arm calculation in `../Mechanical/Payload_Mechanism.md`. The SG90's ~1.8 kg·cm stall torque against a worst-case 100g payload at a 20mm arm gives roughly a 9x safety margin, cross-checked against a real published reference (Zbotic) using the same servo class.
+
+5. **"What flight controller firmware are you using, and did you write your own flight-stabilization code?"** No, and explain why that's the right call: Betaflight is mature, well-documented, and reimplementing PID stabilization from scratch would be a large time sink for zero real engineering credibility gain on a project this size. The original engineering is in frame design, component integration, wiring, and the payload mechanism.
+
+6. **"What was the hardest part of this project?"** Should be a real, specific story from the actual build, likely candidates given the design: getting the arm-to-hub joint tolerance right for a snug but removable fit, tuning the payload latch to release reliably without needing excessive servo torque, or a wiring/soldering issue at this small scale. Don't answer this until an actual real problem has been hit and solved.
+
+7. **"How did you validate the frame structurally?"** Be honest about sequencing: a simple hand-calculated load case first (`../Mechanical/Frame_Design.md` §4), then one simple static FEA study on the arm (`../Mechanical/FEA_Plan.md`), deliberately scoped small so FEA doesn't become its own project. If it wasn't run yet before the interview, say so.
+
+8. **"What safety precautions did you take?"** Propeller/LiPo/electrical hazards, always testing motors with props off first, only spinning props in a cleared area, and a mapped kill-switch/disarm before every flight. Reference `../README.md`'s safety section.
+
+9. **"What would you improve if you built a second version?"** Good answers: right-size the motor closer to the exact required thrust once real bench data exists (rather than the estimated target), refine the arm-joint design if bench testing shows it's a stiffness weak point, iterate the payload latch geometry based on release-reliability data from Test 8.
+
+10. **"How is this different from just buying a Tiny Whoop and gluing a hook on it?"** The frame, motor mounts, and payload mechanism are all original CAD/3D-printed designs with a documented load case and safety-factor analysis, not a repurposed off-the-shelf toy. The component selection (FC/ESC/motor/battery/servo) was individually researched and justified, not copied from one existing kit.
