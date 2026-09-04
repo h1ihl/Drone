@@ -18,8 +18,8 @@ Real precedents researched (`../Research/Existing_Projects.md`, sources 7-9): se
 - **Selected servo: SG90** (9 g, ~1.8 kg·cm / ~1.6 lb·in stall torque, **Manufacturer-specified**, one of the most well-documented micro servo specs out there).
 - **Payload range:** 20-100 g (0.196-0.981 N weight force).
 - **Moment arm:** for a hook mounted close to the servo horn's pivot (~15-20 mm arm), required holding torque:
-  - At 100 g payload, 20 mm arm: T = F x r = 0.981 N x 0.020 m = **0.0196 N·m ≈ 0.20 kg·cm**
-  - The SG90's rated ~1.8 kg·cm stall torque gives a **safety factor ≈ 9x** against the worst-case (100 g) payload at this moment arm, comfortable margin, and it lines up with the Zbotic reference's own sizing logic (source 9: "SG90 can hold ~900g of hatch plus payload force" at a 20mm arm, so this build's worst case of 100g is well within that same servo's demonstrated capability window).
+  - At 100 g payload, 20 mm arm: T = F x r = 0.981 N x 0.020 m = **0.0196 N·m ~ 0.20 kg·cm**
+  - The SG90's rated ~1.8 kg·cm stall torque gives a **safety factor ~ 9x** against the worst-case (100 g) payload at this moment arm, comfortable margin, and it lines up with the Zbotic reference's own sizing logic (source 9: "SG90 can hold ~900g of hatch plus payload force" at a 20mm arm, so this build's worst case of 100g is well within that same servo's demonstrated capability window).
 - **Conclusion:** the SG90 is adequately sized with a large margin even at the top of the payload range. No need to step up to a heavier MG90S/MG996R servo, which would just add unnecessary mass/cost.
 
 ## 3. Design Details
@@ -36,8 +36,8 @@ Real precedents researched (`../Research/Existing_Projects.md`, sources 7-9): se
 
 | Load case | Force | Servo capability | Safety factor |
 |---|---:|---:|---:|
-| Max payload (100 g), 20 mm arm | 0.0196 N·m | 0.177 N·m (1.8 kg·cm) | **≈ 9x** |
-| Min payload (20 g), 20 mm arm | 0.0039 N·m | 0.177 N·m | **≈ 45x** (over-margined at the low end, which is fine since the servo is sized for the worst case) |
+| Max payload (100 g), 20 mm arm | 0.0196 N·m | 0.177 N·m (1.8 kg·cm) | **~ 9x** |
+| Min payload (20 g), 20 mm arm | 0.0039 N·m | 0.177 N·m | **~ 45x** (over-margined at the low end, which is fine since the servo is sized for the worst case) |
 
 ## 5. Open Items
 

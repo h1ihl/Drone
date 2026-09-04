@@ -9,8 +9,8 @@ Drone Assembly
 │
 ├── Frame
 │   ├── Center Hub (electronics deck)
-│   ├── Arm × 4 (identical part, bolt-on)
-│   └── Motor Mount × 4 (integral to arm tip, or separate, see §2)
+│   ├── Arm x 4 (identical part, bolt-on)
+│   └── Motor Mount x 4 (integral to arm tip, or separate, see §2)
 │
 ├── Electronics Mount
 │   └── FC/ESC standoff mount (soft-mount if vibration is an issue, see §3)

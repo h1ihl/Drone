@@ -2,7 +2,7 @@
 
 Small hobby/engineering-student quadcopter project I'm building at the University of Calgary. I originally planned something much bigger and ended up redesigning it from scratch at a smaller, actually-buildable scale. See `Design_Journal.md` for the reasoning. The original design and its documentation are still in `_Archive_v1_Oversized_UAV/` for reference, not deleted, just no longer the active plan.
 
-**Full report:** `Drone_Project_Guide.pdf`.
+**Full report:** `Drone_Project_Guide.pdf` (32+ pages, covers everything below in one document). Generated from this repo's markdown files by `Tools/report-generator/` — see that folder's README before hand-editing the PDF/BOM.xlsx/Test_Plan.xlsx, they're generated output, not source.
 
 ## Final Configuration Summary
 
@@ -37,6 +37,7 @@ Drone Project/
 ├── BOM/                          ← full costed bill of materials (Minimum/Recommended/Maximum)
 ├── Testing/                      ← 10-test plan + KPI summary, TARGET values until measured
 ├── Resume/                       ← resume bullets + interview talking points
+├── Tools/report-generator/       ← Node.js scripts that generate the PDF/xlsx above from the .md source
 └── _Archive_v1_Oversized_UAV/    ← original oversized UAV design, kept for reference only
 ```
 
@@ -54,4 +55,3 @@ Propeller and LiPo battery hazards apply even at this small scale. Always spin m
 - Confirm the final budget ceiling now that real pricing is known (~$125-282 CAD depending on tier).
 - Pick the actual payload item(s) to deliver.
 - Write and bench-validate the custom ESP32 RC-link firmware (ESP-NOW TX/RX, SBUS encoder, failsafe timeout) before any motors-on test. This replaces a proven off-the-shelf receiver with self-written firmware, so it needs its own bring-up and range/failsafe testing, see `Electrical/Electrical_Architecture.md` §1a and `Testing/Test_Plan.xlsx` Test 5.
-- **`Drone_Project_Guide.pdf` is now stale** (it still describes the FlySky TX/RX pair) and needs to be manually regenerated/re-exported from the updated source docs above, this repo doesn't contain the PDF's source, only the compiled file, so it can't be safely hand-edited. Double-check `Electrical/Wiring_Diagram.pdf` too, it should show the FC-to-ESP32-RX SBUS wiring instead of FC-to-FlySky-receiver wiring.

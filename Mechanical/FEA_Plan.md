@@ -12,7 +12,7 @@ The idea here: if FEA is practical, do a small FEA study of the custom frame, no
 
 ## 2. Target
 
-Factor of safety **≥ 3** against the 0.69 N design load, given FDM print-quality uncertainty (same conservative logic as the archived v1 design, just applied to a much smaller, simpler load case here).
+Factor of safety **>= 3** against the 0.69 N design load, given FDM print-quality uncertainty (same conservative logic as the archived v1 design, just applied to a much smaller, simpler load case here).
 
 ## 3. Method
 
@@ -21,7 +21,7 @@ Factor of safety **≥ 3** against the 0.69 N design load, given FDM print-quali
 
 ## 4. What Happens With the Result
 
-- If FoS ≥ 3: proceed to printing as designed.
+- If FoS >= 3: proceed to printing as designed.
 - If FoS < 3: thicken the arm slightly or add a rib, a fast, cheap iteration at this part size (see `Manufacturing_Plan.md`'s ~10-15 minute per-arm print time).
 - The result gets labeled **Simulated** in the documentation, and since the true achievable thrust is still pending Test 6 (`Frame_Design.md` §2), I'll spot-check the arm again once real thrust data exists in case the design load needs revising upward.
 

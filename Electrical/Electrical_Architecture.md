@@ -7,8 +7,8 @@ Concept: small modular-arm 2.5-3 inch quadrotor with servo payload release. Keep
 | Role | Selected component | Key specs | Price (USD) | Source |
 |---|---|---|---|---|
 | Flight controller + ESC | 2S F4 AIO FC + Brushless ESC (no RX) | STM32F4, OSD, SmartAudio, built-in 4-in-1 ESC | $22.99 | [AliExpress](https://www.aliexpress.com/item/32969058968.html) |
-| RC link — onboard RX | ESP32-C3 Super Mini | RISC-V, 2.4GHz WiFi, custom firmware: ESP-NOW in → SBUS out (inverted UART) to the FC | ~$3.50-4.80 | [AliExpress](https://www.aliexpress.com/item/1005005319963906.html) |
-| RC link — handheld TX | ESP32-WROOM-32 DevKit | Dual-core, 2.4GHz WiFi, custom firmware: reads sticks/switches → ESP-NOW out | $2.20 | [AliExpress](https://www.aliexpress.com/item/1005003145871431.html) |
+| RC link — onboard RX | ESP32-C3 Super Mini | RISC-V, 2.4GHz WiFi, custom firmware: ESP-NOW in -> SBUS out (inverted UART) to the FC | ~$3.50-4.80 | [AliExpress](https://www.aliexpress.com/item/1005005319963906.html) |
+| RC link — handheld TX | ESP32-WROOM-32 DevKit | Dual-core, 2.4GHz WiFi, custom firmware: reads sticks/switches -> ESP-NOW out | $2.20 | [AliExpress](https://www.aliexpress.com/item/1005003145871431.html) |
 | RC link — sticks | KY-023 dual-axis joystick module x2 | 4 axes total (throttle, yaw, pitch, roll) | $0.60 each | [AliExpress](https://www.aliexpress.com/item/1882818018.html) |
 | RC link — switches | Momentary/toggle switch x2 | Arm switch, payload-release trigger (AUX channels) | ~$0.50 each | Various, see `../BOM/BOM.xlsx` |
 | RC link — TX power | USB power bank (5V) | Powers the handheld TX over USB, assumed already owned | **already owned / UNIVERSITY** | not counted in purchase cost unless confirmed unavailable |
@@ -17,7 +17,7 @@ Concept: small modular-arm 2.5-3 inch quadrotor with servo payload release. Keep
 | Battery | 2S 450mAh HV LiPo (Turnigy BoltX 80C) | 7.6V nominal, XT30 | $5.99 | [HobbyKing](https://hobbyking.com/en_us/turnigy-nano-tech-300mah-2s-35-70c-lipo-pack.html)-class listing, see `../BOM/BOM.xlsx` for exact SKU |
 | Payload servo | SG90 9g micro servo | 1.8 kg·cm stall torque | ~$3.00 | AliExpress (bulk-pack pricing, see `Payload_Mechanism.md`) |
 
-**Total purchased (Recommended, brushless): see `../BOM/BOM.xlsx`, real-priced total is ≈ $155 CAD**, above my original $100 CAD target. This is a deliberate, documented trade-off, not a budget overrun I'm glossing over: real brushless FPV micro-motor pricing (~$51 USD for 4 motors, confirmed across both a name-brand retailer and a generic AliExpress listing at nearly identical prices) is simply the real cost floor for hardware that meets the 100-300 g / 20-100 g payload target. I've got room to stretch the budget somewhat, so I'm going with this. The Minimum tier below stays much closer to $100 CAD by accepting reduced payload capacity instead. Swapping the FlySky TX/RX pair for the custom ESP32 link is essentially cost-neutral, actually about $2 CAD cheaper (~$11.67 CAD combined for the RX/TX ESP32s, joysticks, and switches, vs. the ~$13.89 CAD the FlySky receiver alone cost, see `../BOM/BOM.xlsx`), it's a scope decision about demonstrating embedded programming, not a budget decision.
+**Total purchased (Recommended, brushless): see `../BOM/BOM.xlsx`, real-priced total is ~ $155 CAD**, above my original $100 CAD target. This is a deliberate, documented trade-off, not a budget overrun I'm glossing over: real brushless FPV micro-motor pricing (~$51 USD for 4 motors, confirmed across both a name-brand retailer and a generic AliExpress listing at nearly identical prices) is simply the real cost floor for hardware that meets the 100-300 g / 20-100 g payload target. I've got room to stretch the budget somewhat, so I'm going with this. The Minimum tier below stays much closer to $100 CAD by accepting reduced payload capacity instead. Swapping the FlySky TX/RX pair for the custom ESP32 link is essentially cost-neutral, actually about $2 CAD cheaper (~$11.67 CAD combined for the RX/TX ESP32s, joysticks, and switches, vs. the ~$13.89 CAD the FlySky receiver alone cost, see `../BOM/BOM.xlsx`), it's a scope decision about demonstrating embedded programming, not a budget decision.
 
 ## 1a. Custom RC Link (ESP32, replaces FlySky TX/RX)
 
@@ -52,22 +52,22 @@ The brushed path can realistically land close to $100 CAD (or under, if a receiv
 
 | Rail | Nominal voltage | Source | Loads |
 |---|---|---|---|
-| Battery / main power | 7.6 V (2S HV) | Battery direct | ESC (→ motors), FC power input |
+| Battery / main power | 7.6 V (2S HV) | Battery direct | ESC (-> motors), FC power input |
 | 5V | 5V regulated | FC/ESC board's onboard BEC | RX ESP32 (RC link), payload servo |
 | Signal | 3.3V logic (internal to FC) | FC onboard regulator | MCU/gyro internal only |
 
-No separate high-current PDB, fuse, or dedicated companion-computer power rail is needed at this scale. The FC/ESC board's onboard BEC handles the onboard RX ESP32 and servo directly (the ESP32-C3 Super Mini's onboard 5V→3.3V regulator accepts the BEC's 5V directly), which is standard practice for a build this small (unlike the archived v1 design's dedicated PDB/UBEC/fuse architecture, which was sized for a much higher-current system). The handheld TX ESP32 is powered separately, off the drone, from a USB power bank.
+No separate high-current PDB, fuse, or dedicated companion-computer power rail is needed at this scale. The FC/ESC board's onboard BEC handles the onboard RX ESP32 and servo directly (the ESP32-C3 Super Mini's onboard 5V->3.3V regulator accepts the BEC's 5V directly), which is standard practice for a build this small (unlike the archived v1 design's dedicated PDB/UBEC/fuse architecture, which was sized for a much higher-current system). The handheld TX ESP32 is powered separately, off the drone, from a USB power bank.
 
 ## 4. Interfaces
 
 | Interface | Between | Protocol |
 |---|---|---|
-| FC ↔ ESC | Same board (integrated) | Internal (DShot to onboard MOSFETs) |
-| FC ↔ Motors | ESC output → motor phase wires | 3-phase, soldered direct (no bullet connectors needed at this small gauge) |
-| FC ↔ RC link | FC ↔ onboard RX ESP32 | SBUS (single wire + power + ground), generated by custom RX firmware, see §1a |
-| TX ESP32 ↔ RX ESP32 | Handheld TX ↔ onboard RX | ESP-NOW over 2.4GHz WiFi (wireless, no wired connection) |
-| FC ↔ Payload servo | FC servo output pad | PWM, mapped to a spare AUX channel in Betaflight |
-| Battery ↔ FC/ESC | XT30 connector | Direct, no separate power switch at this current level; unplugging the battery is the standard, sufficient practice for a build this small |
+| FC <-> ESC | Same board (integrated) | Internal (DShot to onboard MOSFETs) |
+| FC <-> Motors | ESC output -> motor phase wires | 3-phase, soldered direct (no bullet connectors needed at this small gauge) |
+| FC <-> RC link | FC <-> onboard RX ESP32 | SBUS (single wire + power + ground), generated by custom RX firmware, see §1a |
+| TX ESP32 <-> RX ESP32 | Handheld TX <-> onboard RX | ESP-NOW over 2.4GHz WiFi (wireless, no wired connection) |
+| FC <-> Payload servo | FC servo output pad | PWM, mapped to a spare AUX channel in Betaflight |
+| Battery <-> FC/ESC | XT30 connector | Direct, no separate power switch at this current level; unplugging the battery is the standard, sufficient practice for a build this small |
 
 ## 5. Wiring Diagram
 

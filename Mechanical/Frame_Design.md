@@ -15,7 +15,7 @@ Selected concept: **C, Modular Arm Design** (see `../Research/Concept_Comparison
 | Payload-release servo (SG90) | 9 g | **Manufacturer-specified**, the SG90's ~9 g mass is one of its best-documented specs |
 | Payload mount/latch hardware (printed) | 5 g | **Estimated** |
 | Wiring, connectors, heat-shrink | 5 g | **Estimated** |
-| **Total bare AUW (no payload)** | **≈ 84 g** | Sum, rounded to **90 g** for margin |
+| **Total bare AUW (no payload)** | **~ 84 g** | Sum, rounded to **90 g** for margin |
 
 This lands comfortably within the 100-300 g target band once a payload is added, and lines up with real precedent (source 5 in `Existing_Projects.md`: toothpick-class builds "stay under ~250 g AUW"; source 3: a documented real 75 g 3-inch build).
 
@@ -26,7 +26,7 @@ Using a mid-range payload target of 50 g (within the 20-100 g range) for baselin
 - Total system mass = 90 g (bare) + 50 g (payload) = **140 g**
 - Weight = 0.140 kg x 9.81 m/s² = **1.37 N**
 - Target thrust-to-weight ratio = **2:1**
-- **Required total thrust = 2 x 1.37 N ≈ 2.75 N ≈ 280 gf**, i.e. **≈ 70 gf per motor** (4 motors)
+- **Required total thrust = 2 x 1.37 N ~ 2.75 N ~ 280 gf**, i.e. **~ 70 gf per motor** (4 motors)
 
 **This is the required number, not a claimed capability.** I couldn't find a real, independently-verified thrust-in-grams curve for the specific 1103 11000KV + 65mm prop + 2S combination (one bench-test source, fishpepper.de, turned up but its actual data tables weren't accessible in this pass, so it's flagged as **NOT FOUND**, not estimated). What is real and sourced: this exact motor/prop/cell-count combination is the standard, widely-used configuration for 2S toothpick/whoop-class builds in this weight class (`Existing_Projects.md`, sources 1-6), which gives reasonable qualitative confidence that ~70 gf/motor is achievable well under full throttle. The actual achieved thrust **has to be confirmed by Test 6 (Static Thrust Test) in `../Testing/Test_Plan.xlsx`** before I trust it for real flight. If bench testing shows the motors fall short of ~70 gf/motor at a reasonable throttle percentage, the payload target needs to come down accordingly. That's recorded here as an open item, not silently assumed to work.
 
@@ -40,10 +40,10 @@ Using a mid-range payload target of 50 g (within the 20-100 g range) for baselin
 
 ### Arm loading (Calculated, preliminary)
 
-Each arm carries its motor's reaction thrust. Using the required-thrust figure above (70 gf/motor ≈ 0.69 N) as the working design load (not the motor's true max, which is unknown pending Test 6):
+Each arm carries its motor's reaction thrust. Using the required-thrust figure above (70 gf/motor ~ 0.69 N) as the working design load (not the motor's true max, which is unknown pending Test 6):
 
-- Design load per arm ≈ **0.69 N**, applied at the arm tip (motor mount), reacted at the hub joint.
-- A conservative preliminary target safety factor of **≥ 3** against this load is set for the arm design, consistent with standard practice for small FDM-printed structural parts (layer-adhesion anisotropy makes a lower margin risky). This is a design target, to be confirmed by the simple FEA study in `FEA_Plan.md` once CAD geometry exists.
+- Design load per arm ~ **0.69 N**, applied at the arm tip (motor mount), reacted at the hub joint.
+- A conservative preliminary target safety factor of **>= 3** against this load is set for the arm design, consistent with standard practice for small FDM-printed structural parts (layer-adhesion anisotropy makes a lower margin risky). This is a design target, to be confirmed by the simple FEA study in `FEA_Plan.md` once CAD geometry exists.
 - Because the true achievable motor thrust is unverified (§2), I'll also check the arm against a higher bounding case once Test 6 data exists, e.g. the motor's actual measured max thrust, not just the ~70 gf design target, since a crash/prop-strike event can briefly load the arm well above steady hover thrust.
 
 ### Motor mount (Calculated, preliminary)
