@@ -7,14 +7,36 @@ Concept: small modular-arm 2.5-3 inch quadrotor with servo payload release. Keep
 | Role | Selected component | Key specs | Price (USD) | Source |
 |---|---|---|---|---|
 | Flight controller + ESC | 2S F4 AIO FC + Brushless ESC (no RX) | STM32F4, OSD, SmartAudio, built-in 4-in-1 ESC | $22.99 | [AliExpress](https://www.aliexpress.com/item/32969058968.html) |
-| Receiver | FlySky FS-A8S | 2.4GHz, 8CH, PPM/i-BUS/SBUS output | $9.99 | [FlexRC](https://flexrc.com/product/flysky-fs-a8s-receiver/) |
-| Transmitter | Any FlySky-compatible TX (FS-i6, FS-i6X, etc.) | 2.4GHz AFHDS 2A | **UNIVERSITY / CHECK INVENTORY or already owned** | assuming many hobbyist-adjacent labs/clubs have a compatible TX; not counted in purchase cost unless confirmed unavailable |
+| RC link — onboard RX | ESP32-C3 Super Mini | RISC-V, 2.4GHz WiFi, custom firmware: ESP-NOW in → SBUS out (inverted UART) to the FC | ~$3.50-4.80 | [AliExpress](https://www.aliexpress.com/item/1005005319963906.html) |
+| RC link — handheld TX | ESP32-WROOM-32 DevKit | Dual-core, 2.4GHz WiFi, custom firmware: reads sticks/switches → ESP-NOW out | $2.20 | [AliExpress](https://www.aliexpress.com/item/1005003145871431.html) |
+| RC link — sticks | KY-023 dual-axis joystick module x2 | 4 axes total (throttle, yaw, pitch, roll) | $0.60 each | [AliExpress](https://www.aliexpress.com/item/1882818018.html) |
+| RC link — switches | Momentary/toggle switch x2 | Arm switch, payload-release trigger (AUX channels) | ~$0.50 each | Various, see `../BOM/BOM.xlsx` |
+| RC link — TX power | USB power bank (5V) | Powers the handheld TX over USB, assumed already owned | **already owned / UNIVERSITY** | not counted in purchase cost unless confirmed unavailable |
 | Motors (x4) | 1103 11000KV brushless | ~3.3-3.55 g each, 2S-rated, 1.5mm shaft | $50.99 (4-pack) | [Pyrodrone](https://pyrodrone.com/products/betafpv-1103-11000kv-2s-brushless-motor-4pcs) |
 | Propellers (x4 + spares) | Gemfan 65mm 2-blade | 1mm/1.5mm shaft, set of 8 (4 spare) | $4.49 | [GetFPV](https://www.getfpv.com/gemfan-65mm-micro-propellers-1mm-shaft-set-of-8.html) |
 | Battery | 2S 450mAh HV LiPo (Turnigy BoltX 80C) | 7.6V nominal, XT30 | $5.99 | [HobbyKing](https://hobbyking.com/en_us/turnigy-nano-tech-300mah-2s-35-70c-lipo-pack.html)-class listing, see `../BOM/BOM.xlsx` for exact SKU |
 | Payload servo | SG90 9g micro servo | 1.8 kg·cm stall torque | ~$3.00 | AliExpress (bulk-pack pricing, see `Payload_Mechanism.md`) |
 
-**Total purchased (Recommended, brushless): see `../BOM/BOM.xlsx`, real-priced total is ≈ $156 CAD**, above my original $100 CAD target. This is a deliberate, documented trade-off, not a budget overrun I'm glossing over: real brushless FPV micro-motor pricing (~$51 USD for 4 motors, confirmed across both a name-brand retailer and a generic AliExpress listing at nearly identical prices) is simply the real cost floor for hardware that meets the 100-300 g / 20-100 g payload target. I've got room to stretch the budget somewhat, so I'm going with this. The Minimum tier below stays much closer to $100 CAD by accepting reduced payload capacity instead.
+**Total purchased (Recommended, brushless): see `../BOM/BOM.xlsx`, real-priced total is ≈ $155 CAD**, above my original $100 CAD target. This is a deliberate, documented trade-off, not a budget overrun I'm glossing over: real brushless FPV micro-motor pricing (~$51 USD for 4 motors, confirmed across both a name-brand retailer and a generic AliExpress listing at nearly identical prices) is simply the real cost floor for hardware that meets the 100-300 g / 20-100 g payload target. I've got room to stretch the budget somewhat, so I'm going with this. The Minimum tier below stays much closer to $100 CAD by accepting reduced payload capacity instead. Swapping the FlySky TX/RX pair for the custom ESP32 link is essentially cost-neutral, actually about $2 CAD cheaper (~$11.67 CAD combined for the RX/TX ESP32s, joysticks, and switches, vs. the ~$13.89 CAD the FlySky receiver alone cost, see `../BOM/BOM.xlsx`), it's a scope decision about demonstrating embedded programming, not a budget decision.
+
+## 1a. Custom RC Link (ESP32, replaces FlySky TX/RX)
+
+I'm replacing the stock FlySky transmitter/receiver pair with a self-written RC link between two ESP32 boards. The reason is deliberate: it turns "buy a receiver" into an actual embedded-programming deliverable (packet protocol, SBUS generation, failsafe logic) that fits the project's stated embedded-systems goal (`../Requirements/Requirements.md` §1), at close to the same purchased cost as the FlySky pair it replaces. **This is a real added engineering/schedule risk, not a drop-in swap** — a commercial receiver already has proven failsafe and RF behavior; here I have to build and validate that myself before it's trusted in the air. Flagged honestly, not glossed over.
+
+**Link:** ESP-NOW (built into the ESP32 WiFi radio, connectionless, no router/pairing needed, low latency, typically ~2-5 ms one-way).
+
+**TX firmware (handheld ESP32):**
+- Reads 4 analog stick axes (throttle, yaw, pitch, roll) + 2 switch inputs (arm, payload release) from GPIO/ADC.
+- Packs them into a small struct (channel values + a sequence number + a checksum) and broadcasts it via ESP-NOW at ~50-100 Hz.
+
+**RX firmware (onboard ESP32):**
+- Receives ESP-NOW packets, validates the checksum, updates a local channel-value table.
+- Independently, on its own fixed timer (not tied to packet arrival), builds a standard 25-byte SBUS frame from the current channel-value table and writes it out over UART to the FC, at the ~9-14 ms interval Betaflight expects. Decoupling the SBUS timer from RF packet timing keeps the signal to the FC steady even if individual radio packets are late or dropped.
+- **Failsafe watchdog:** if no valid ESP-NOW packet has been received within a timeout (~200-300 ms), the RX firmware sets the SBUS frame's failsafe flag (and/or forces throttle to a safe low value) instead of holding the last good command, the same behavior a commercial receiver provides, but here it has to be explicitly written and bench-tested (Test 5, `../Testing/Test_Plan.xlsx`), not assumed.
+
+**SBUS signal inversion:** standard SBUS is an inverted 100000-baud UART signal. The RX ESP32's UART peripheral can generate this directly (hardware signal-invert option exposed by the Arduino-ESP32 core's `HardwareSerial.begin()`), so no separate inverter circuit should be needed. **Contingency:** if the FC doesn't accept the ESP32's inverted signal cleanly, a simple NPN-transistor inverter (~$0.50 CAD in parts, a transistor + two resistors, not separately itemized in the BOM) is a documented fallback.
+
+**Known limitation vs. a commercial RC system, stated honestly:** ESP-NOW is a WiFi-radio protocol, not a purpose-built RC link. It doesn't have the frequency-hopping/diversity/interference-hardening that AFHDS2A (FlySky) or dedicated systems like ExpressLRS have, and its realistic range with stock antennas is on the order of tens to a couple hundred meters, well short of a commercial system's typical range. That's an acceptable trade for a hobby build flown at close range in a controlled test area, but it's a real limitation, not a hidden one, and range/failsafe behavior must be bench-verified (walk-away failsafe test) before any flight test, not assumed to match FlySky's proven behavior.
 
 ## 2. Minimum-Budget Fallback (Brushed path)
 
@@ -31,10 +53,10 @@ The brushed path can realistically land close to $100 CAD (or under, if a receiv
 | Rail | Nominal voltage | Source | Loads |
 |---|---|---|---|
 | Battery / main power | 7.6 V (2S HV) | Battery direct | ESC (→ motors), FC power input |
-| 5V | 5V regulated | FC/ESC board's onboard BEC | Receiver, payload servo |
+| 5V | 5V regulated | FC/ESC board's onboard BEC | RX ESP32 (RC link), payload servo |
 | Signal | 3.3V logic (internal to FC) | FC onboard regulator | MCU/gyro internal only |
 
-No separate high-current PDB, fuse, or dedicated companion-computer power rail is needed at this scale. The FC/ESC board's onboard BEC handles the receiver and servo directly, which is standard practice for a build this small (unlike the archived v1 design's dedicated PDB/UBEC/fuse architecture, which was sized for a much higher-current system).
+No separate high-current PDB, fuse, or dedicated companion-computer power rail is needed at this scale. The FC/ESC board's onboard BEC handles the onboard RX ESP32 and servo directly (the ESP32-C3 Super Mini's onboard 5V→3.3V regulator accepts the BEC's 5V directly), which is standard practice for a build this small (unlike the archived v1 design's dedicated PDB/UBEC/fuse architecture, which was sized for a much higher-current system). The handheld TX ESP32 is powered separately, off the drone, from a USB power bank.
 
 ## 4. Interfaces
 
@@ -42,7 +64,8 @@ No separate high-current PDB, fuse, or dedicated companion-computer power rail i
 |---|---|---|
 | FC ↔ ESC | Same board (integrated) | Internal (DShot to onboard MOSFETs) |
 | FC ↔ Motors | ESC output → motor phase wires | 3-phase, soldered direct (no bullet connectors needed at this small gauge) |
-| FC ↔ Receiver | FC ↔ FlySky FS-A8S | SBUS (single wire + power + ground) |
+| FC ↔ RC link | FC ↔ onboard RX ESP32 | SBUS (single wire + power + ground), generated by custom RX firmware, see §1a |
+| TX ESP32 ↔ RX ESP32 | Handheld TX ↔ onboard RX | ESP-NOW over 2.4GHz WiFi (wireless, no wired connection) |
 | FC ↔ Payload servo | FC servo output pad | PWM, mapped to a spare AUX channel in Betaflight |
 | Battery ↔ FC/ESC | XT30 connector | Direct, no separate power switch at this current level; unplugging the battery is the standard, sufficient practice for a build this small |
 
@@ -53,5 +76,6 @@ See `Wiring_Diagram.pdf`, a simple, clearly labeled diagram (VBAT, 5V, GND, PWM/
 ## 6. Open Items
 
 - Exact battery SKU/mass not independently re-verified this session, confirm at purchase time.
-- FlySky-compatible transmitter availability, check university inventory before buying a new one.
-- Whether the university's engineering resources include any of the above (battery, RX, or even a spare FC/ESC from a robotics club). Every dollar saved here directly closes the gap toward the original $100 CAD target.
+- ESP32 RC-link firmware (TX stick/switch reading, ESP-NOW packet format, RX SBUS encoder, failsafe watchdog) still needs to be written and bench-tested before any motors-on test, see §1a.
+- Confirm the ESP32 hardware UART-invert approach actually produces a signal the FC accepts; fall back to the transistor-inverter contingency if not.
+- Whether the university's engineering resources include any of the above (battery, ESP32 boards, or even a spare FC/ESC from a robotics club). Every dollar saved here directly closes the gap toward the original $100 CAD target.

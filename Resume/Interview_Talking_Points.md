@@ -1,6 +1,6 @@
 # Interview Talking Points
 
-10 likely technical questions, with guidance on how to answer honestly. Where the answer depends on data not yet measured, don't memorize a fake number, describe the method and cite the real result once testing is complete.
+11 likely technical questions, with guidance on how to answer honestly. Where the answer depends on data not yet measured, don't memorize a fake number, describe the method and cite the real result once testing is complete.
 
 1. **"Why this frame design over a standard quadcopter frame?"** Walk through the three-concept comparison in `../Research/Concept_Comparison.md`. Concept C (modular arm) was chosen specifically for repairability during iterative testing, at a small, deliberate mass/stiffness cost versus a traditional X-frame. Be ready to explain why repairability mattered more than shaving a gram or two for a first build.
 
@@ -20,4 +20,6 @@
 
 9. **"What would you improve if you built a second version?"** Good answers: right-size the motor closer to the exact required thrust once real bench data exists (rather than the estimated target), refine the arm-joint design if bench testing shows it's a stiffness weak point, iterate the payload latch geometry based on release-reliability data from Test 8.
 
-10. **"How is this different from just buying a Tiny Whoop and gluing a hook on it?"** The frame, motor mounts, and payload mechanism are all original CAD/3D-printed designs with a documented load case and safety-factor analysis, not a repurposed off-the-shelf toy. The component selection (FC/ESC/motor/battery/servo) was individually researched and justified, not copied from one existing kit.
+10. **"How is this different from just buying a Tiny Whoop and gluing a hook on it?"** The frame, motor mounts, and payload mechanism are all original CAD/3D-printed designs with a documented load case and safety-factor analysis, not a repurposed off-the-shelf toy. The component selection (FC/ESC/motor/battery/servo) was individually researched and justified, not copied from one existing kit, and the RC link itself is self-written firmware rather than a bought accessory.
+
+11. **"Why build your own RC link instead of just buying a $20 FlySky receiver?"** Be honest about the trade: a stock FlySky pair is proven, has built-in failsafe, and is objectively the lower-risk choice for getting a drone in the air. The reason to build a custom ESP32 link anyway is that it turns "buy a part" into an actual programming deliverable, useful for demonstrating embedded/software skills alongside the mechanical work, at close to the same purchased cost (`../Design_Journal.md`, `../Electrical/Electrical_Architecture.md` §1a). Be ready to explain the design: ESP-NOW for the wireless hop, a self-encoded SBUS frame to the FC, and a failsafe watchdog that cuts to a safe state if packets stop arriving, and be honest that its range/interference robustness is weaker than a purpose-built RC system, which is why it's only appropriate for close-range hobby flying, not something safety-critical.

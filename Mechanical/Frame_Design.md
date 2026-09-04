@@ -8,14 +8,14 @@ Selected concept: **C, Modular Arm Design** (see `../Research/Concept_Comparison
 |---|---:|---|
 | Frame (modular arms + hub, 3D printed) | 10 g | **Estimated**, no CAD/print exists yet; benchmarked against the real Feather 3 frame (~5 g bare X-frame, source 1 in `Existing_Projects.md`), plus a margin for the modular arm-joint hardware bosses |
 | Flight controller + ESC (2S F4 AIO combo) | 6 g | **Estimated**, typical mass for this board class; exact figure not published on the listing found |
-| Receiver (FlySky FS-A8S) | 6 g | **Estimated**, typical published mass for this receiver class, not independently re-verified this session |
+| Onboard RX (ESP32-C3 Super Mini) | 3 g | **Estimated**, typical published mass for this compact board class (~22x18mm bare board), not independently re-verified this session |
 | Motors (4x 1103 11000KV) | 14 g | **Manufacturer-specified**, ~3.3-3.55 g each across multiple real listings ([BetaFPV](https://betafpv.com/products/1103-brushless-motors), cross-checked against AliExpress/T-Motor listings) |
 | Propellers (4x 65mm) | 4 g | **Estimated**, small 2-blade micro props are typically ~1 g each |
 | Battery (2S 450mAh HV, e.g. Turnigy BoltX) | 28 g | **Estimated**, typical mass for this capacity/chemistry class, not independently re-verified this session |
 | Payload-release servo (SG90) | 9 g | **Manufacturer-specified**, the SG90's ~9 g mass is one of its best-documented specs |
 | Payload mount/latch hardware (printed) | 5 g | **Estimated** |
 | Wiring, connectors, heat-shrink | 5 g | **Estimated** |
-| **Total bare AUW (no payload)** | **≈ 87 g** | Sum, rounded to **90 g** for margin |
+| **Total bare AUW (no payload)** | **≈ 84 g** | Sum, rounded to **90 g** for margin |
 
 This lands comfortably within the 100-300 g target band once a payload is added, and lines up with real precedent (source 5 in `Existing_Projects.md`: toothpick-class builds "stay under ~250 g AUW"; source 3: a documented real 75 g 3-inch build).
 
@@ -58,4 +58,4 @@ Full FEA (a single simple static load case, kept deliberately small) is in `FEA_
 
 ## 5. Brushed-Motor Fallback (strict-budget path, see `../Electrical/Electrical_Architecture.md` for the full cost comparison)
 
-If the brushless path's real component cost (~$156 CAD, see `../BOM/BOM.xlsx`) ends up too far above the $100 CAD target even with some flexibility, a brushed-motor micro build (coreless 8.5x20mm-class motors, no separate ESC needed) is a real fallback, but it caps AUW around 30-50 g and realistic payload capacity around 5-15 g, well below the 20-100 g payload target. I'm recording that trade-off here rather than quietly building to a target the cheaper hardware can't actually hit. **Recommendation: go with the brushless path**, since I've got some budget flexibility.
+If the brushless path's real component cost (~$155 CAD, see `../BOM/BOM.xlsx`) ends up too far above the $100 CAD target even with some flexibility, a brushed-motor micro build (coreless 8.5x20mm-class motors, no separate ESC needed) is a real fallback, but it caps AUW around 30-50 g and realistic payload capacity around 5-15 g, well below the 20-100 g payload target. I'm recording that trade-off here rather than quietly building to a target the cheaper hardware can't actually hit. **Recommendation: go with the brushless path**, since I've got some budget flexibility.

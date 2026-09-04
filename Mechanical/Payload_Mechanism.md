@@ -29,7 +29,7 @@ Real precedents researched (`../Research/Existing_Projects.md`, sources 7-9): se
 | Hook/latch material | PETG (impact resistance for repeated release cycles; see `Manufacturing_Plan.md`) |
 | Payload cradle | A simple printed loop/cup the payload hangs from or sits in, sized to the actual payload item (open item, depends on what's actually being "delivered," e.g. a small printed test mass) |
 | Servo mount | Printed bracket, M2 bolted to the frame hub, positioned so the release swing arc doesn't intersect props or landing legs |
-| Trigger | A spare AUX channel on the RC transmitter mapped to a servo output in Betaflight (`servo` mixer/AUX assignment), no custom firmware needed |
+| Trigger | A dedicated switch on the handheld ESP32 TX, carried as an AUX channel over the custom RC link (`../Electrical/Electrical_Architecture.md` §1a) and mapped to a servo output in Betaflight (`servo` mixer/AUX assignment) same as it would be with a stock receiver. The Betaflight-side mixer setup needs no custom firmware; getting that AUX channel there over the custom link does, see the RC-link firmware notes |
 | Release testing | Bench-tested repeatedly (Test 8, Payload Mechanism Test) before any flight test. Release reliability is measured (release success rate over N trials), not assumed |
 
 ## 4. Safety Factor Summary

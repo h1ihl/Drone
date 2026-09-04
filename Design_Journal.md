@@ -31,13 +31,21 @@ Once I started pricing real parts instead of guessing, the $100 target didn't ho
 So I ended up with three tiers instead of pretending $100 was still realistic:
 
 - **Minimum** (brushed motors, no ESC needed): stays close to $100 CAD, but payload capacity drops to around 5 to 15 g
-- **Recommended** (brushless): about $156 CAD, meets the actual payload target
-- **Maximum** (with spares and a charger): about $283 CAD
+- **Recommended** (brushless): about $155 CAD, meets the actual payload target
+- **Maximum** (with spares and a charger): about $281 CAD
 
 I'd rather stretch the budget a bit and get a drone that actually hits the payload target than hit an arbitrary number and end up with something that can barely lift anything. The full comparison is in `Electrical/Electrical_Architecture.md` and `Mechanical/Frame_Design.md`.
+
+## Swapping FlySky for a custom ESP32 RC link
+
+Originally I'd planned to just buy a FlySky FS-A8S receiver and use whatever compatible transmitter I could find through the university. That's the easy, proven path. But I want this project to show programming/embedded skills too, not just CAD and mechanical integration, so I'm replacing the stock TX/RX pair with a link I write myself: two ESP32 boards talking over ESP-NOW, with the onboard one generating a real SBUS signal for the flight controller.
+
+This is a genuine trade, not a free upgrade. A commercial receiver already has proven failsafe behavior and RF robustness; here I have to design and bench-test that myself (packet protocol, SBUS framing, a failsafe watchdog) before I'd trust it in the air, and ESP-NOW's range/interference handling is honestly weaker than a purpose-built RC system like AFHDS2A or ExpressLRS. I'm keeping that limitation explicit in `Electrical/Electrical_Architecture.md` §1a rather than pretending it's equivalent. It's the right call for what I want this project to demonstrate, on a hobby build I'm flying at close range in a controlled area, not for something that needs long-range or safety-of-life reliability.
+
+Cost-wise it's basically a wash: the ESP32 boards + joysticks + switches (~$11.67 CAD combined) landed close to where the FlySky receiver alone cost (~$13.89 CAD), so the tier totals barely moved (`../BOM/BOM.xlsx`). The real cost is schedule risk, writing and validating link firmware is new work that a stock receiver wouldn't need, so I added a dedicated bench-test step (Test 5, `../Testing/Test_Plan.xlsx`) instead of assuming it'll just work.
 
 ## What I'm keeping myself honest about
 
 I don't want this documentation to make claims I haven't actually tested. Every number in here is labeled as Manufacturer-specified, Calculated, Estimated, or Measured, and anything I haven't tested yet is marked TARGET. I'd rather have an honest set of estimates now and update them once I've actually built and flown the thing than write numbers that sound impressive and turn out to be wrong.
 
-Still open: confirming which parts I can actually get through the university (receiver, battery, hardware, filament, transmitter) instead of buying new, and locking in the final budget now that I know real pricing.
+Still open: confirming which parts I can actually get through the university (battery, hardware, filament, ESP32 boards) instead of buying new, locking in the final budget now that I know real pricing, and actually writing/bench-validating the ESP32 RC-link firmware before it goes anywhere near a flight test.

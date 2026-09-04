@@ -23,7 +23,8 @@ Small parts, short print times. This should be a fast, iterative process, not a 
 | Hub | ~20-30 min | ~3-5 g |
 | Arm x4 | ~10-15 min each (~45-60 min total) | ~1-2 g each (~5-8 g total) |
 | Payload mount/latch assembly | ~20-30 min | ~3-5 g |
-| **Total frame + payload mechanism** | **~1.5-2 hours** | **~10-18 g filament** |
+| Handheld TX enclosure (2-piece, holds ESP32 DevKit + sticks + switches) | ~30-45 min | ~5-10 g |
+| **Total** | **~2-2.75 hours** | **~15-28 g filament** |
 
 At typical PETG spool pricing, this is a trivial material cost, well under $5 CAD in filament (confirmed in `../BOM/BOM.xlsx`).
 
@@ -42,15 +43,17 @@ None required. This is a deliberate choice (per `../Research/Concept_Comparison.
 
 ## 5. Assembly Sequence
 
-1. Print hub, 4 arms, payload latch assembly.
+1. Print hub, 4 arms, payload latch assembly, TX enclosure.
 2. Install heat-set inserts (soldering iron or dedicated tool, low heat).
 3. Bolt arms to hub.
 4. Mount motors to arm tips.
 5. Mount FC/ESC board to hub, wire to motors (see `../Electrical/Wiring_Diagram.pdf`).
-6. Mount receiver, battery tray.
+6. Mount onboard RX ESP32, battery tray.
 7. Mount payload servo + latch assembly.
 8. Wire servo to FC/ESC board's servo output.
-9. Cable management (zip ties/tape, clear of prop arcs).
-10. Continuity check before first power-on (Test 1-3 in `../Testing/Test_Plan.xlsx`).
+9. Assemble handheld TX: wire joysticks + switches to the TX ESP32, mount in the printed enclosure.
+10. Flash and bench-test the RC-link firmware (TX and RX ESP32) on the bench, off the frame, before wiring the RX into the FC: confirm channel data, AUX switches, and the failsafe watchdog all behave correctly (see `../Electrical/Electrical_Architecture.md` §1a).
+11. Cable management (zip ties/tape, clear of prop arcs).
+12. Continuity check before first power-on (Test 1-3 in `../Testing/Test_Plan.xlsx`).
 
-Total build time (printing + assembly), separate from electronics sourcing/shipping wait time: realistically **2-4 hours** of hands-on work. This is the kind of project that can genuinely be finished start-to-finish in a weekend once parts are in hand, which fits fine within the overall 3-8 week timeline being dominated by parts shipping and iterative testing, not raw build labor.
+Total build time (printing + mechanical assembly), separate from electronics sourcing/shipping wait time: realistically **2-4 hours** of hands-on work. That figure covers fabrication and wiring only; it does not include writing and bench-validating the RC-link firmware (step 10), which is a real software development task with its own separate time cost, not bundled into the "weekend build" estimate. This is still the kind of project that can be finished start-to-finish in a weekend once parts are in hand and the firmware already works, which fits fine within the overall 3-8 week timeline being dominated by parts shipping and iterative testing, not raw build labor.

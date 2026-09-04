@@ -11,10 +11,11 @@ Format: Action + Engineering Method + Technical Detail + Measurable Result. **No
 1. Designed and fabricated a lightweight, modular, 3D-printed quadrotor frame using CAD and a simple static FEA study, achieving a factor of safety of **[X]** against a **[Y] N** motor-thrust load case while keeping bare airframe mass at **[Z] g**.
 2. Selected and integrated a brushless propulsion system (motors, ESC, 2S battery) through first-principles thrust-to-weight calculations, achieving a measured hover flight time of **[X] minutes** carrying a **[Y] g** payload.
 3. Designed and 3D-printed a custom servo-actuated payload-release mechanism, sized via a torque/moment-arm safety-factor calculation, achieving a **[X]%** release reliability over **[Y]** bench trials.
-4. Assembled a complete flight-electronics system (flight controller, ESC, receiver, battery, payload servo) from individually researched and sourced components, verified via bench continuity/power-on testing with zero electrical faults.
+4. Assembled a complete flight-electronics system (flight controller, ESC, custom RC link, battery, payload servo) from individually researched and sourced components, verified via bench continuity/power-on testing with zero electrical faults.
 5. Completed a full payload-delivery flight mission (takeoff, manual flight, payload positioning, remote release, landing), demonstrating end-to-end integration of mechanical, electrical, and control-systems engineering on a self-sourced budget of **[$X] CAD**.
+6. Designed and programmed a custom dual-ESP32 RC control link (ESP-NOW wireless protocol, a self-encoded SBUS frame output over UART to the flight controller, and a failsafe watchdog) in C++/Arduino, replacing a stock RC transmitter/receiver pair with self-written embedded firmware, achieving **[X] ms** link latency and **[Y]%** failsafe-trigger reliability over **[Z]** bench trials.
 
-*(Five bullets drafted so I can pick the strongest ones once real results exist.)*
+*(Six bullets drafted so I can pick the strongest ones once real results exist.)*
 
 ## Why This Project Is Impressive
 
@@ -22,5 +23,6 @@ Format: Action + Engineering Method + Technical Detail + Measurable Result. **No
 - The frame concept (Concept C, modular arm design) was picked over two real alternatives through a documented trade-off analysis (repairability vs. stiffness/mass), not just built as "the obvious quadcopter shape." A genuine, defensible engineering decision and a strong interview story.
 - The payload mechanism has a real, calculated safety factor (~9x at worst case, `../Mechanical/Payload_Mechanism.md`), showing the mechanical design isn't just "it looks about right."
 - The budget research is honest and shows real market awareness: the project openly identifies that real brushless FPV components cost more than a naive $100 target implies, and makes (and documents) a deliberate trade-off instead of hiding the gap.
+- The custom ESP32 RC link is real embedded-programming depth, not just mechanical/CAD work: a wireless packet protocol, a from-scratch SBUS encoder, and a failsafe watchdog, deliberately chosen over a cheaper, lower-risk stock receiver specifically to demonstrate that skill (`../Electrical/Electrical_Architecture.md` §1a).
 
 See `Interview_Talking_Points.md` for how to defend this project technically.

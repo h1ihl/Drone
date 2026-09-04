@@ -10,14 +10,15 @@ Small hobby/engineering-student quadcopter project I'm building at the Universit
 |---|---|
 | Frame concept | Modular arm design (2.5-3" prop class), selected over two alternatives, see `Research/Concept_Comparison.md` |
 | Propulsion | 4x 1103 11000KV brushless motors, 65mm props, 2S F4 AIO FC+ESC |
+| RC link | Custom ESP32-to-ESP32 link (ESP-NOW), RX ESP32 outputs SBUS to the FC, replaces a stock FlySky TX/RX pair, see `Electrical/Electrical_Architecture.md` §1a |
 | Battery | 2S 450mAh HV LiPo |
 | Payload mechanism | Servo-actuated latch/hook release (SG90) |
 | Estimated bare mass | ~90 g |
 | Payload target | 20-100 g |
 | Required thrust (2:1 T/W @ 50g payload) | ~280 gf total |
-| Cost, Minimum (brushed fallback) | ~$126 CAD |
-| Cost, Recommended (brushless, meets payload target) | ~$156 CAD |
-| Cost, Maximum (+ spares/charger) | ~$283 CAD |
+| Cost, Minimum (brushed fallback) | ~$125 CAD |
+| Cost, Recommended (brushless, meets payload target) | ~$155 CAD |
+| Cost, Maximum (+ spares/charger) | ~$281 CAD |
 | Timeline | 3-8 weeks part-time |
 
 All figures above are Calculated/Estimated pending real testing, see `Testing/Test_Plan.xlsx`.
@@ -49,6 +50,8 @@ Propeller and LiPo battery hazards apply even at this small scale. Always spin m
 
 ## Open Items
 
-- Confirm which components are actually available through University of Calgary inventory (receiver, battery, hardware, filament, transmitter). Every item marked "CHECK INVENTORY" in `BOM/BOM.xlsx` lowers the real out-of-pocket cost if it's available.
-- Confirm the final budget ceiling now that real pricing is known (~$126-283 CAD depending on tier).
+- Confirm which components are actually available through University of Calgary inventory (battery, hardware, filament). Every item marked "CHECK INVENTORY" in `BOM/BOM.xlsx` lowers the real out-of-pocket cost if it's available.
+- Confirm the final budget ceiling now that real pricing is known (~$125-282 CAD depending on tier).
 - Pick the actual payload item(s) to deliver.
+- Write and bench-validate the custom ESP32 RC-link firmware (ESP-NOW TX/RX, SBUS encoder, failsafe timeout) before any motors-on test. This replaces a proven off-the-shelf receiver with self-written firmware, so it needs its own bring-up and range/failsafe testing, see `Electrical/Electrical_Architecture.md` §1a and `Testing/Test_Plan.xlsx` Test 5.
+- **`Drone_Project_Guide.pdf` is now stale** (it still describes the FlySky TX/RX pair) and needs to be manually regenerated/re-exported from the updated source docs above, this repo doesn't contain the PDF's source, only the compiled file, so it can't be safely hand-edited. Double-check `Electrical/Wiring_Diagram.pdf` too, it should show the FC-to-ESP32-RX SBUS wiring instead of FC-to-FlySky-receiver wiring.

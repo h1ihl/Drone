@@ -15,7 +15,7 @@ Target claim this project should support:
 
 | Constraint | Value |
 |---|---|
-| Purchased hardware budget | **$100 CAD strict target, with some flexibility to stretch if needed** - see `../BOM/BOM.xlsx` for why real component pricing pushes the fully-capable (brushless, 100-300 g class) build to ~$156 CAD, and the cheaper brushed-motor fallback that stays much closer to $100 CAD at reduced payload capacity |
+| Purchased hardware budget | **$100 CAD strict target, with some flexibility to stretch if needed** - see `../BOM/BOM.xlsx` for why real component pricing pushes the fully-capable (brushless, 100-300 g class) build to ~$155 CAD, and the cheaper brushed-motor fallback that stays much closer to $100 CAD at reduced payload capacity |
 | Vehicle size | 2.5-5 inch propellers, small lightweight frame |
 | Target all-up mass | ~100-300 g (brushless path) if practical |
 | Payload target | 20-100 g, depending on actual lifting capacity |
@@ -27,7 +27,7 @@ Target claim this project should support:
 
 - FR1: Custom-designed, 3D-printed frame, not a purchased ready-to-fly frame.
 - FR2: IMU/gyro-based flight stabilization using existing flight-control firmware (Betaflight or equivalent). I'm not reimplementing flight-critical stabilization software from scratch.
-- FR3: Manual RC flight control, no autonomous navigation required.
+- FR3: Manual RC flight control, no autonomous navigation required. The RC link itself is a custom ESP32-to-ESP32 link I write (ESP-NOW + a self-encoded SBUS output to the FC) instead of a stock transmitter/receiver pair, see `../Electrical/Electrical_Architecture.md` §1a; this is a deliberate scope choice to demonstrate embedded programming, not a requirement to reimplement flight stabilization (FR2 still stands: Betaflight handles that).
 - FR4: A custom-designed, 3D-printed, servo-actuated payload-release mechanism, manually triggered by the pilot.
 - FR5: Basic wiring/electronics integration I assemble myself (frame, motors, ESC/FC, battery, servo).
 
