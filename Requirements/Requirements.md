@@ -1,7 +1,7 @@
 # Requirements
 
 **Project:** Custom 3D-Printed Micro Quadrotor with Servo Payload Release
-**Scale:** Small hobby/engineering-student project, not a capstone-level UAV. This replaces the original requirements I wrote for a much bigger autonomous UAV concept; see `../_Archive_v1_Oversized_UAV/` for that version, kept only for reference.
+**Scale:** Small hobby/engineering-student project, not a capstone-level UAV. This replaces the original requirements I wrote for a much bigger autonomous UAV concept; that version was kept in an `_Archive_v1_Oversized_UAV/` folder for reference, which has since been removed from the repo.
 
 ## 1. Project Intent
 

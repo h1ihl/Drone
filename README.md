@@ -1,6 +1,6 @@
 # Drone Project: Custom 3D-Printed Micro Quadrotor with Servo Payload Release
 
-Small hobby/engineering-student quadcopter project I'm building at the University of Calgary. I originally planned something much bigger and ended up redesigning it from scratch at a smaller, actually-buildable scale. See `Design_Journal.md` for the reasoning. The original design and its documentation are still in `_Archive_v1_Oversized_UAV/` for reference, not deleted, just no longer the active plan.
+Small hobby/engineering-student quadcopter project I'm building at the University of Calgary. I originally planned something much bigger and ended up redesigning it from scratch at a smaller, actually-buildable scale. See `Design_Journal.md` for the reasoning. The original, larger design's documentation used to be kept in an `_Archive_v1_Oversized_UAV/` folder for reference; that folder has since been removed from the repo.
 
 **Full report:** `Drone_Project_Guide.pdf` (32+ pages, covers everything below in one document). Generated from this repo's markdown files by `Tools/report-generator/` — see that folder's README before hand-editing the PDF/BOM.xlsx/Test_Plan.xlsx, they're generated output, not source.
 
@@ -37,8 +37,7 @@ Drone Project/
 ├── BOM/                          ← full costed bill of materials (Minimum/Recommended/Maximum)
 ├── Testing/                      ← 10-test plan + KPI summary, TARGET values until measured
 ├── Resume/                       ← resume bullets + interview talking points
-├── Tools/report-generator/       ← Node.js scripts that generate the PDF/xlsx above from the .md source
-└── _Archive_v1_Oversized_UAV/    ← original oversized UAV design, kept for reference only
+└── Tools/report-generator/       ← Node.js scripts that generate the PDF/xlsx above from the .md source
 ```
 
 ## Why the Budget Went Over $100 CAD

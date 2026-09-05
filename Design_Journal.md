@@ -10,7 +10,7 @@ That's a capstone project, not something one student builds part-time for fun. I
 
 ## The reset
 
-The old design is still sitting in `_Archive_v1_Oversized_UAV/`. I didn't delete it, since some of the research is still useful, but it's not the plan anymore.
+The old design used to sit in an `_Archive_v1_Oversized_UAV/` folder for reference, but that folder has since been removed from the repo. It's not the plan anymore either way.
 
 What I actually want is a small, cheap hobby quadcopter I can build and fly in a few weeks, with a simple custom payload-release mechanism as the "interesting" feature. No GPS, no LiDAR, no companion computer, no autonomous navigation. None of that is needed to make this a real engineering project, and all of it adds cost, complexity, and time I don't have.
 
