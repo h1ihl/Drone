@@ -75,7 +75,7 @@ See `Wiring_Diagram.pdf`, a simple, clearly labeled diagram (VBAT, 5V, GND, PWM/
 
 ## 6. Open Items
 
-- Exact battery SKU/mass not independently re-verified this session, confirm at purchase time.
+- Exact battery SKU/mass not independently re-verified yet, confirm at purchase time.
 - ESP32 RC-link firmware (TX stick/switch reading, ESP-NOW packet format, RX SBUS encoder, failsafe watchdog) still needs to be written and bench-tested before any motors-on test, see §1a.
 - Confirm the ESP32 hardware UART-invert approach actually produces a signal the FC accepts; fall back to the transistor-inverter contingency if not.
 - Whether the university's engineering resources include any of the above (battery, ESP32 boards, or even a spare FC/ESC from a robotics club). Every dollar saved here directly closes the gap toward the original $100 CAD target.

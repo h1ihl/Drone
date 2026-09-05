@@ -1,6 +1,6 @@
 # Existing Small/Budget Quadcopter Project Research
 
-Research redone at the corrected project scale (small, inexpensive hobby quadcopter). The earlier research aimed at a much bigger autonomous UAV was kept in `../_Archive_v1_Oversized_UAV/Research/Existing_Projects.md` for reference, which has since been removed from the repo. All projects below are real, found via live web search, with real source links, nothing invented.
+Research redone at the corrected project scale (small, inexpensive hobby quadcopter). The earlier research aimed at a much bigger autonomous UAV was kept in `../_Archive_v1_Oversized_UAV/Research/Existing_Projects.md` for reference, which has since been removed from the repo. All projects below are real, found through online research, with real source links, nothing invented.
 
 Focus question: **What is the best small, inexpensive quadcopter project that still has meaningful engineering design work?**
 

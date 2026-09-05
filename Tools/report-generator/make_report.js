@@ -175,7 +175,7 @@ h1SectionStart(2, 'Executive Summary');
 para('This report documents the redesigned scope of a small, affordable hobby quadcopter project: a custom 3D-printed 2.5-3 inch micro quadrotor with a servo-actuated payload-release mechanism. This design deliberately replaces an earlier, much larger autonomous-UAV concept (formerly archived in an _Archive_v1_Oversized_UAV/ folder, since removed from the repo) that was well beyond the intended scope, budget, and timeline for this project.');
 para('The selected frame concept is a modular-arm design (Concept C of three compared), chosen for repairability during iterative testing. The propulsion system is a real, sourced 2S brushless setup (SPARKHOBBY XSPEED 1103 11000KV motors, 65mm props, an AIO flight controller/ESC board) running Betaflight - no custom flight-stabilization firmware. A servo-actuated latch mechanism (SG90) delivers a 20-100 g payload.');
 para('RC control is a self-written link between two ESP32 boards (ESP-NOW wireless protocol, a custom SBUS encoder, and a failsafe watchdog on the onboard receiver) instead of a stock FlySky transmitter/receiver pair - a deliberate scope choice to demonstrate embedded programming alongside the mechanical work, at close to the same purchased cost. This is a real added engineering/schedule risk relative to a proven off-the-shelf receiver, and is documented honestly as such (Section 12).');
-para('Real, verified component pricing pushes the fully-capable build (meeting the stated 100-300 g mass / 20-100 g payload target) to approximately $117.95 CAD, just above the original $100 CAD target - this is presented honestly as a real market constraint, not hidden. This figure reflects a later, more thorough AliExpress price comparison that found the same motor spec for under half the price initially budgeted (Section 16). The user has indicated some willingness to stretch the budget; a cheaper brushed-motor fallback (~$124.68 CAD) is also documented, at reduced payload capacity.');
+para('Real, verified component pricing pushes the fully-capable build (meeting the stated 100-300 g mass / 20-100 g payload target) to approximately $117.95 CAD, just above the original $100 CAD target - this is presented honestly as a real market constraint, not hidden. This figure reflects a later, more thorough AliExpress price comparison that found the same motor spec for under half the price initially budgeted (Section 16). I have some willingness to stretch the budget; a cheaper brushed-motor fallback (~$124.68 CAD) is also documented, at reduced payload capacity.');
 para('Nothing has been physically built or tested yet. Every quantitative claim in this report is labeled Calculated, Estimated, or Manufacturer-specified - never a fabricated measurement. Target timeline is 3-8 weeks of part-time work.');
 
 h1SectionStart(3, 'Requirements');
@@ -194,7 +194,7 @@ h1SectionStart(6, 'Selected Design');
 renderMd(readMdSectionSlice(path.join('Research', 'Concept_Comparison.md'), '## Selected Concept', null));
 
 h1SectionStart(7, 'System Architecture');
-para('The system is deliberately simple (per the brief\'s Section 4): a single flight-controller/ESC board running Betaflight handles all stabilization and motor control; a self-written ESP32-to-ESP32 RC link (ESP-NOW wireless, custom SBUS output) provides manual pilot control in place of a stock receiver; a payload servo, triggered from a spare AUX channel carried over that link, handles payload release. No companion computer, no autonomy stack, no custom PCB.');
+para('The system is deliberately simple (per the Requirements doc, Section 4): a single flight-controller/ESC board running Betaflight handles all stabilization and motor control; a self-written ESP32-to-ESP32 RC link (ESP-NOW wireless, custom SBUS output) provides manual pilot control in place of a stock receiver; a payload servo, triggered from a spare AUX channel carried over that link, handles payload release. No companion computer, no autonomy stack, no custom PCB.');
 h2('Block Diagram');
 para('Battery -> FC/ESC (AIO board) -> 4x brushless motors (thrust/attitude control). Handheld TX ESP32 --ESP-NOW (wireless)--> onboard RX ESP32 -> FC/ESC (SBUS, pilot control). FC/ESC -> Payload servo (PWM, AUX-channel triggered release). Full labeled wiring diagram: Section 13.');
 h2('Subsystem Ownership');
@@ -234,7 +234,7 @@ h1SectionStart(12, 'Electrical Architecture');
 renderMd(readMd(path.join('Electrical', 'Electrical_Architecture.md')));
 
 h1SectionStart(13, 'Wiring Diagram');
-para('The wiring diagram below shows every component, connector, and signal line in the system, with VBAT/5V/GND/PWM/SBUS clearly labeled per the brief\'s Section 14. This is a genuinely simple electrical system - one page is enough. The handheld TX ESP32 is off-board and reaches the onboard RX ESP32 wirelessly (ESP-NOW), not by wire, so it is shown separately from the wired onboard system below it.');
+para('The wiring diagram below shows every component, connector, and signal line in the system, with VBAT/5V/GND/PWM/SBUS clearly labeled, matching the Electrical Architecture doc, Section 5. This is a genuinely simple electrical system - one page is enough. The handheld TX ESP32 is off-board and reaches the onboard RX ESP32 wirelessly (ESP-NOW), not by wire, so it is shown separately from the wired onboard system below it.');
 drawWiring();
 
 h1SectionStart(14, 'CAD / Manufacturing');
@@ -384,7 +384,7 @@ function renderReferences() {
     while ((m = re.exec(text)) !== null) { const [, label, url] = m; if (!seen.has(url)) seen.set(url, label); }
   }
   const entries = Array.from(seen.entries());
-  para(`${entries.length} unique real sources cited, retrieved via live web search on 2026-08-30.`);
+  para(`${entries.length} unique real sources cited, found through online research on 2026-08-30.`);
   let n = 1;
   for (const [url, label] of entries) {
     ensureSpace(12);

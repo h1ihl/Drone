@@ -8,10 +8,10 @@ Selected concept: **C, Modular Arm Design** (see `../Research/Concept_Comparison
 |---|---:|---|
 | Frame (modular arms + hub, 3D printed) | 10 g | **Estimated**, no CAD/print exists yet; benchmarked against the real Feather 3 frame (~5 g bare X-frame, source 1 in `Existing_Projects.md`), plus a margin for the modular arm-joint hardware bosses |
 | Flight controller + ESC (2S F4 AIO combo) | 6 g | **Estimated**, typical mass for this board class; exact figure not published on the listing found |
-| Onboard RX (ESP32-C3 Super Mini) | 3 g | **Estimated**, typical published mass for this compact board class (~22x18mm bare board), not independently re-verified this session |
+| Onboard RX (ESP32-C3 Super Mini) | 3 g | **Estimated**, typical published mass for this compact board class (~22x18mm bare board), not independently re-verified yet |
 | Motors (4x 1103 11000KV) | 14 g | **Manufacturer-specified**, ~3.3-3.55 g each across multiple real listings ([BetaFPV](https://betafpv.com/products/1103-brushless-motors), cross-checked against AliExpress/T-Motor listings) |
 | Propellers (4x 65mm) | 4 g | **Estimated**, small 2-blade micro props are typically ~1 g each |
-| Battery (2S 450mAh HV, e.g. Turnigy BoltX) | 28 g | **Estimated**, typical mass for this capacity/chemistry class, not independently re-verified this session |
+| Battery (2S 450mAh HV, e.g. Turnigy BoltX) | 28 g | **Estimated**, typical mass for this capacity/chemistry class, not independently re-verified yet |
 | Payload-release servo (SG90) | 9 g | **Manufacturer-specified**, the SG90's ~9 g mass is one of its best-documented specs |
 | Payload mount/latch hardware (printed) | 5 g | **Estimated** |
 | Wiring, connectors, heat-shrink | 5 g | **Estimated** |
@@ -33,7 +33,7 @@ Using a mid-range payload target of 50 g (within the 20-100 g range) for baselin
 ## 3. Battery (Estimated, pending bench confirmation)
 
 - Battery: 2S 450 mAh HV LiPo (e.g. Turnigy BoltX 80C, 7.6 V nominal), **Manufacturer-specified** capacity/voltage, **Estimated** mass (see §1).
-- Current draw at hover-equivalent throttle: **NOT FOUND / not calculable from reliable data this session**. The only power figures I found for this motor class (peak power/current ratings synthesized from listings) were internally inconsistent between sources, so I'm not using them here rather than risk presenting a wrong number as fact.
+- Current draw at hover-equivalent throttle: **NOT FOUND / not calculable from reliable data yet**. The only power figures I found for this motor class (peak power/current ratings synthesized from listings) were internally inconsistent between sources, so I'm not using them here rather than risk presenting a wrong number as fact.
 - **Flight time: TARGET, to be measured in Test 7 (Hover Test).** Community experience with this general build class (toothpick/whoop, 2S, small LiPo) typically falls in a several-minutes-per-charge range, but that's not claimed here as a design value, only as a rough sanity-check range to be confirmed or corrected by measurement.
 
 ## 4. Simple Structural Calculations
