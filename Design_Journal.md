@@ -31,10 +31,12 @@ Once I started pricing real parts instead of guessing, the $100 target didn't ho
 So I ended up with three tiers instead of pretending $100 was still realistic:
 
 - **Minimum** (brushed motors, no ESC needed): stays close to $100 CAD, but payload capacity drops to around 5 to 15 g
-- **Recommended** (brushless): about $155 CAD, meets the actual payload target
-- **Maximum** (with spares and a charger): about $281 CAD
+- **Recommended** (brushless): about $117.95 CAD, meets the actual payload target
+- **Maximum** (with spares and a charger): about $206.86 CAD
 
 I'd rather stretch the budget a bit and get a drone that actually hits the payload target than hit an arbitrary number and end up with something that can barely lift anything. The full comparison is in `Electrical/Electrical_Architecture.md` and `Mechanical/Frame_Design.md`.
+
+**Update:** the Recommended-tier numbers above were revised down from an original ~$155/$281 CAD after a later, more thorough AliExpress price comparison found the same-spec motor (SPARKHOBBY XSPEED 1103 11000KV, 2-3S, 1.5mm shaft, Gemfan/HQprop 65mm compatible) at C$33.58/4-pack instead of the original ~$71 CAD/4-pack (Pyrodrone/BetaFPV), under half the price for the identical spec. See `Electrical/Electrical_Architecture.md` §1 for the full sourcing story.
 
 ## Swapping FlySky for a custom ESP32 RC link
 

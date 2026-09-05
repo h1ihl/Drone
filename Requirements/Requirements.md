@@ -15,7 +15,7 @@ Target claim this project should support:
 
 | Constraint | Value |
 |---|---|
-| Purchased hardware budget | **$100 CAD strict target, with some flexibility to stretch if needed** - see `../BOM/BOM.xlsx` for why real component pricing pushes the fully-capable (brushless, 100-300 g class) build to ~$155 CAD, and the cheaper brushed-motor fallback that stays much closer to $100 CAD at reduced payload capacity |
+| Purchased hardware budget | **$100 CAD strict target, with some flexibility to stretch if needed** - see `../BOM/BOM.xlsx`; the fully-capable (brushless, 100-300 g class) build lands at ~$117.95 CAD after sourcing a cheaper motor listing (see `../Electrical/Electrical_Architecture.md`), and the cheaper brushed-motor fallback stays even closer to $100 CAD (~$124.68 CAD) at reduced payload capacity |
 | Vehicle size | 2.5-5 inch propellers, small lightweight frame |
 | Target all-up mass | ~100-300 g (brushless path) if practical |
 | Payload target | 20-100 g, depending on actual lifting capacity |
